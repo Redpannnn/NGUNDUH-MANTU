@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@libsql/client";
+import { getClient, ensureTables } from "@/lib/migrate";
 
 /** GET /api/guests/lookup?code=xxx → { ok, name|null }.
- *  SELF-CONTAINED: pakai @libsql/client langsung, NGGAK import db.ts.
+ *  Self-healing: kalau tabel Guest belum ada, bikin dulu lewat ensureTables.
+ *  Kalau code nggak ditemukan, balikin name: null (fail gracefully biar cover
+ *  page nggak crash, cuma tampil nama literal dari URL).
  */
 export async function GET(req: NextRequest) {
   try {
@@ -11,12 +13,8 @@ export async function GET(req: NextRequest) {
     if (!code) {
       return NextResponse.json({ ok: true, name: null });
     }
-    const url = process.env.DATABASE_URL;
-    const token = process.env.DATABASE_AUTH_TOKEN;
-    if (!url || (!url.startsWith("libsql:") && !url.startsWith("http:") && !url.startsWith("https:") && !url.startsWith("file:"))) {
-      return NextResponse.json({ ok: false, error: "DATABASE_URL tidak valid" }, { status: 500 });
-    }
-    const client = createClient({ url, authToken: token });
+    const client = getClient();
+    await ensureTables(client);
     const result = await client.execute({
       sql: 'SELECT name FROM Guest WHERE code = ?',
       args: [code],

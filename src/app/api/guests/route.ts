@@ -1,33 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@libsql/client";
-import type { Client } from "@libsql/client";
-
-/**
- * SELF-CONTAINED guests API — bikin koneksi sendiri pakai @libsql/client.
- * NGGAK import db.ts (Prisma), jadi tetap jalan walau Prisma build cache rusak.
- */
-function getClient(): Client {
-  const url = process.env.DATABASE_URL;
-  const token = process.env.DATABASE_AUTH_TOKEN;
-  if (!url || (!url.startsWith("libsql:") && !url.startsWith("http:") && !url.startsWith("https:") && !url.startsWith("file:"))) {
-    throw new Error("DATABASE_URL tidak valid");
-  }
-  return createClient({ url, authToken: token });
-}
-
-function genId(): string {
-  // cuid-like: timestamp + random
-  return (
-    "c" +
-    Date.now().toString(36) +
-    Math.random().toString(36).slice(2, 10)
-  );
-}
+import { getClient, genId, ensureTables } from "@/lib/migrate";
 
 /** GET /api/guests — list all guests. */
 export async function GET() {
   try {
     const client = getClient();
+    await ensureTables(client);
     const result = await client.execute(
       "SELECT id, code, name, createdAt FROM Guest ORDER BY createdAt DESC"
     );
@@ -57,6 +35,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const client = getClient();
+    await ensureTables(client);
 
     // Bulk mode
     if (Array.isArray(body?.guests)) {
@@ -181,6 +160,7 @@ export async function PUT(req: NextRequest) {
     }
 
     const client = getClient();
+    await ensureTables(client);
 
     // Cek tamu yang mau di-edit ada atau nggak
     const existing = await client.execute({
@@ -250,6 +230,7 @@ export async function DELETE(req: NextRequest) {
       );
     }
     const client = getClient();
+    await ensureTables(client);
     await client.execute({ sql: 'DELETE FROM Guest WHERE id = ?', args: [id] });
     await client.close();
     return NextResponse.json({ ok: true });
