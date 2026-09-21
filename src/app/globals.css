@@ -1,0 +1,224 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-playfair);
+  --font-script: var(--font-cormorant);
+  --font-latin: var(--font-cinzel);
+  --font-wedding: var(--font-great-vibes);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Wedding invitation helpers — pakai @utility (Tailwind v4) supaya pasti
+   ter-emit ke output CSS. @layer utilities {} versi lama sering di-strip
+   oleh Tailwind v4 kalau class-nya bukan utility bawaan Tailwind. */
+@utility font-serif-display {
+  font-family: var(--font-playfair);
+}
+@utility font-script {
+  font-family: var(--font-cormorant);
+}
+@utility font-latin {
+  font-family: var(--font-cinzel);
+}
+@utility font-wedding {
+  font-family: var(--font-great-vibes);
+}
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* Wind sway animation for the decorative corner trees.
+   Subtle, slow rotation to mimic a light breeze. The transform-origin is set
+   to bottom center so the trees pivot at their base, like real foliage.
+   Left & right variants rotate in opposite directions so the mirrored pair
+   sways symmetrically inward/outward. */
+@keyframes sway-left {
+  0%, 100% { transform: rotate(-2.4deg); }
+  50% { transform: rotate(1.6deg); }
+}
+@keyframes sway-right {
+  0%, 100% { transform: rotate(2.4deg); }
+  50% { transform: rotate(-1.6deg); }
+}
+.animate-sway-left {
+  transform-origin: 50% 100%;
+  animation: sway-left 6s ease-in-out infinite;
+}
+.animate-sway-right {
+  transform-origin: 50% 100%;
+  animation: sway-right 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-sway-left,
+  .animate-sway-right {
+    animation: none;
+  }
+}
+
+/* Flying birds animation — birds fly across the top area, left↔right.
+   IMPORTANT: translateX uses vw (viewport width) NOT %, because % would be
+   relative to the bird's own width (~26px), barely moving it. With vw the
+   birds truly cross the full screen. */
+@keyframes fly-across {
+  /* travel from off-screen left (-10vw) to off-screen right (110vw),
+     with a slight vertical bob in the middle for natural flight */
+  0%   { transform: translateX(-10vw) translateY(0); }
+  25%  { transform: translateX(20vw) translateY(-8px); }
+  50%  { transform: translateX(50vw) translateY(0); }
+  75%  { transform: translateX(80vw) translateY(-6px); }
+  100% { transform: translateX(110vw) translateY(0); }
+}
+@keyframes fly-across-reverse {
+  /* reverse: from off-screen right (110vw) to off-screen left (-10vw) */
+  0%   { transform: translateX(110vw) translateY(0); }
+  25%  { transform: translateX(80vw) translateY(-8px); }
+  50%  { transform: translateX(50vw) translateY(0); }
+  75%  { transform: translateX(20vw) translateY(-6px); }
+  100% { transform: translateX(-10vw) translateY(0); }
+}
+/* subtle wing flap — scales the bird vertically to suggest flapping */
+@keyframes wing-flap {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.7); }
+}
+
+.bird-flying {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform;
+  /* default direction; override per-bird via the modifier classes below */
+  animation: fly-across 14s linear infinite;
+}
+.bird-flying-reverse {
+  animation: fly-across-reverse 14s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bird-flying,
+  .bird-flying-reverse {
+    animation: none;
+  }
+}
