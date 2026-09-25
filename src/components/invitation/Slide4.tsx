@@ -21,10 +21,6 @@ const AKAD_TARGET = new Date("2026-12-12T02:00:00Z").getTime();
 // Link Google Maps khusus untuk lokasi Akad Nikah (Mushola Al Maabdah).
 const AKAD_MAP_URL = "https://maps.app.goo.gl/u5Tmtumsag47Uj9k9";
 
-// Alamat yang dipakai semua acara (semua di Krajan, Tegaron, Banyubiru, Semarang).
-const VENUE_ADDRESS =
-  "Krajan 1 RT 003/002, Desa Tegaron, Kec. Banyubiru, Kab. Semarang";
-
 // Alamat Kediaman Mempelai Pria (lokasi Ngunduh Mantu).
 const NGUNDUH_MANTU_ADDRESS =
   "Jl. Grogol No.12 RT 006 RW 003, Pudakpayung, Banyumanik, Semarang";
@@ -70,19 +66,21 @@ function EventCard({
 }: {
   title: string;
   date: string;
-  time: string;
+  /** Jam acara. Kalau undefined, baris jam tidak dirender. */
+  time?: string;
   venue: string;
-  address: string;
+  /** Alamat venue. Kalau undefined, baris alamat tidak dirender. */
+  address?: string;
   /** Link Google Maps khusus. Kalau dikasih, dipakai apa adanya.
    *  Kalau undefined, fallback ke search URL otomatis dari venue + address. */
   mapUrl?: string;
 }) {
   // Kalau ada custom mapUrl (mis. short link maps.app.goo.gl) pakai itu;
-  // kalau tidak, bangun search URL dari venue + address.
+  // kalau tidak, bangun search URL dari venue (+ address kalau ada).
   const href =
     mapUrl ??
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-      `${venue}, ${address}`
+      address ? `${venue}, ${address}` : venue
     )}`;
 
   return (
@@ -106,9 +104,11 @@ function EventCard({
         {date}
       </p>
 
-      <p className="font-script relative z-[1] mt-2 text-[0.9rem] text-[#3a3424] sm:text-[1rem]">
-        {time}
-      </p>
+      {time && (
+        <p className="font-script relative z-[1] mt-2 text-[0.9rem] text-[#3a3424] sm:text-[1rem]">
+          {time}
+        </p>
+      )}
 
       <span
         aria-hidden
@@ -118,9 +118,11 @@ function EventCard({
       <p className="font-script relative z-[1] text-[0.95rem] font-medium text-[#3a3424] sm:text-[1.05rem]">
         {venue}
       </p>
-      <p className="font-script relative z-[1] mt-1 text-[0.72rem] leading-relaxed text-[#3a3424] sm:text-[0.78rem]">
-        {address}
-      </p>
+      {address && (
+        <p className="font-script relative z-[1] mt-1 text-[0.72rem] leading-relaxed text-[#3a3424] sm:text-[0.78rem]">
+          {address}
+        </p>
+      )}
 
       <a
         href={href}
@@ -266,21 +268,10 @@ export default function Slide4() {
           Save The Date
         </motion.h2>
 
-        {/* Akad Nikah — tombol "Lihat Lokasi" pakai custom Google Maps link */}
-        <div className="mt-12 flex w-full justify-center">
-          <EventCard
-            title="Akad Nikah"
-            date="Senin, 30 November 2026"
-            time="09.00 WIB - Selesai"
-            venue="Mushola Al Maabdah"
-            address={VENUE_ADDRESS}
-            mapUrl={AKAD_MAP_URL}
-          />
-        </div>
-
         {/* Ngunduh Mantu — venue Kediaman Mempelai Pria.
+            Dipindah ke ATAS (sebelum Akad Nikah) per user request.
             (Resepsi & Tamu Undangan diubah jadi Ngunduh Mantu per user request.) */}
-        <div className="mt-8 flex w-full justify-center">
+        <div className="mt-12 flex w-full justify-center">
           <CombinedEventCard
             sessions={[
               {
@@ -292,6 +283,18 @@ export default function Slide4() {
             venue="Kediaman Mempelai Pria"
             address={NGUNDUH_MANTU_ADDRESS}
             mapUrl={NGUNDUH_MANTU_MAP_URL}
+          />
+        </div>
+
+        {/* Akad Nikah — dipindah ke BAWAH per user request.
+            Jam & alamat dihapus; cuma judul, tanggal, venue, & tombol lokasi.
+            Tombol "Lihat Lokasi" pakai custom Google Maps link. */}
+        <div className="mt-8 flex w-full justify-center">
+          <EventCard
+            title="Akad Nikah"
+            date="Senin, 30 November 2026"
+            venue="Mushola Al Maabdah"
+            mapUrl={AKAD_MAP_URL}
           />
         </div>
 
