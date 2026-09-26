@@ -21,7 +21,7 @@ type BankAccount = {
 };
 
 const ACCOUNTS: BankAccount[] = [
-  { bank: "BCA", number: "0131602421", holder: "Meilany Nugraheni", accent: "text-[#0a4d8c]", badge: "bg-[#0a4d8c]" },
+  { bank: "Mandiri", number: "1360019409546", holder: "FADHIL RIZQI NURSYAH", accent: "text-[#0a4d8c]", badge: "bg-[#0a4d8c]" },
 ];
 
 const container = {
