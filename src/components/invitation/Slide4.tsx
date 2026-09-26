@@ -16,7 +16,7 @@ const FLOWER_ASSET =
 // 09:00 WIB = 02:00 UTC → 2026-12-12T02:00:00Z.
 // (Sebelumnya countdown ke Akad Nikah 30 Nov 2026, sekarang ke Ngunduh Mantu
 //  per user request — biar countdown ngarah ke acara utama terakhir.)
-const AKAD_TARGET = new Date("2026-12-12T02:00:00Z").getTime();
+const AKAD_TARGET = new Date("2026-12-12T06:00:00Z").getTime();
 
 // Link Google Maps khusus untuk lokasi Akad Nikah (Mushola Al Maabdah).
 const AKAD_MAP_URL = "https://maps.app.goo.gl/u5Tmtumsag47Uj9k9";
@@ -275,9 +275,9 @@ export default function Slide4() {
           <CombinedEventCard
             sessions={[
               {
-                title: "Ngunduh Mantu",
+                title: "Tasyakuran Ngunduh Mantu",
                 date: "Sabtu, 12 Desember 2026",
-                time: "Pukul 09.00 WIB - Selesai",
+                time: "Pukul 13.00 WIB - Selesai",
               },
             ]}
             venue="Kediaman Mempelai Pria"
