@@ -293,7 +293,7 @@ export default function Slide4() {
           <EventCard
             title="Akad Nikah"
             date="Senin, 30 November 2026"
-            venue="Mushola Al Maabdah"
+            venue="Rumah Mempelai Wanita"
             mapUrl={AKAD_MAP_URL}
           />
         </div>
